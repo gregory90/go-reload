@@ -1,6 +1,7 @@
 #!/bin/bash
 
 FILE_PATH=$1
+CMD=$2
 FILE_NAME=$(basename $FILE_PATH)
 PROCESS_NAME=$1
 
@@ -23,7 +24,9 @@ function restart {
     killall -q -w -9 $PROCESS_NAME
   fi
   echo ">> Reloading..."
-  gb build -R="/app" all
+  #gb build -R="/app" all
+  $CMD
+  
   /app/bin/$PROCESS_NAME $ARGS &
 }
 
@@ -39,7 +42,9 @@ echo ">> Watching directories, CTRL+C to stop"
 
 
 # Start the main Go program
-gb build -R="/app" all
+#gb build -R="/app" all
+$CMD
+
 /app/bin/$PROCESS_NAME $ARGS &
 
 monitor /app/src
