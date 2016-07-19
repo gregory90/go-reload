@@ -12,8 +12,7 @@ function monitor() {
 # Terminate and rerun the main Go program
 function restart {
   if [ "$(pidof $PROCESS_NAME)" ]; then
-    killall -s SIGKILL $PROCESS_NAME
-    killall -s SIGKILL go-reload
+    killall -q -w -9 $PROCESS_NAME
   fi
   echo ">> Reloading..."
   eval "gb build -R="/app" -ldflags="-extldflags=-ldl" all"
@@ -23,7 +22,7 @@ function restart {
 
 # Make sure all background processes get terminated
 function close {
-  killall -s SIGKILL inotifywait
+  killall -q -w -9 inotifywait
   exit 0
 }
 
