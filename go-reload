@@ -13,6 +13,7 @@ function monitor() {
 function restart {
   if [ "$(pidof $PROCESS_NAME)" ]; then
     killall -q -w -9 $PROCESS_NAME
+    killall -q -w -9 go-reload
   fi
   echo ">> Reloading..."
   eval "gb build -R="/app" -ldflags="-extldflags=-ldl" all"
